@@ -6,10 +6,7 @@ import {
   Appear,
   BlockQuote,
   Cite,
-  Code,
-  CodePane,
   GoToAction,
-  ComponentPlayground,
   Deck,
   Fill,
   Fit,
@@ -19,17 +16,8 @@ import {
   Link,
   List,
   ListItem,
-  Markdown,
-  MarkdownSlides,
   Quote,
   Slide,
-  SlideSet,
-  TableBody,
-  TableHeader,
-  TableHeaderItem,
-  TableItem,
-  TableRow,
-  Table,
   Text
 } from "spectacle";
 
@@ -50,30 +38,28 @@ require('prismjs/themes/prism-tomorrow.css');
 
 const images = {
   awcc_h: require("../assets/awcc_h.png"),
-  osones: require("../assets/OSONES_LOGO.png"),
   aws_v: require("../assets/aws_v.png"),
   aws_h: require("../assets/aws_h.png"),
+  eks_v: require("../assets/amazon-eks.png"),
   azure_h: require("../assets/azure_h.png"),
+  aks_v: require("../assets/aks.png"),
   gcp_h: require("../assets/gcp_h.png"),
-  osones_nfw: require("../assets/OSONES_LOGO_NOFRAME_W.png"),
-  osones_w: require("../assets/OSONES_LOGO_W.png"),
-  osones_e: require("../assets/logo-osones-expertise.png"),
-  osones_pnf: require("../assets/OSONES_PICTO_NOFRAME.png"),
+  gke_v: require("../assets/gke.png"),
   openstack_h: require("../assets/OpenStack-Logo-Horizontal.png"),
   openstack_v: require("../assets/OpenStack-Logo-Vertical.png"),
+  magnum_v: require("../assets/OpenStack_Project_Magnum_vertical.png"),
   swarm: require("../assets/swarm.png"),
-  cloudwatch: require("../assets/cloudwatch.png"),
-  cloudwatch_k8s1: require("../assets/cloudwatch_k8s1.png"),
-  cloudwatch_k8s2: require("../assets/cloudwatch_k8s2.png"),
   mesos: require("../assets/mesos-logo.png"),
   kubernetes: require("../assets/kubernetes-logo.png"),
   kubernetes_v: require("../assets/kubernetes_v.png"),
   kubernetes_h: require("../assets/kubernetes_h.png"),
-  traefik_v: require("../assets/traefik_v.png"),
   dcos: require("../assets/dcos.png"),
   come: require("../assets/come.gif"),
-  morbier: require("../assets/morbier.png"),
-  infra_ref: require("../assets/infra_ref.png")
+  infra_ref: require("../assets/infra_ref.png"),
+  keel_v: require("../assets/keel_v.png"),
+  ci_keel: require("../assets/ci-keel.png"),
+  prometheus_cp: require("../assets/prometheus-cp.png"),
+  prometheus_slack: require("../assets/prometheus-slack.png")
 };
 
 preloader(images);
@@ -91,11 +77,6 @@ const theme = createTheme({
       styles: ['400', '700']
   },
   secondary: "Helvetica",
-  monospace: {
-      name: 'Fira Mono',
-      googleFont: true,
-      styles: ['400', '700']
-  }
 });
 
 export default class Presentation extends React.Component {
@@ -147,7 +128,7 @@ export default class Presentation extends React.Component {
           </Appear>
           <Appear>
           <Heading size={4} margin="30px auto auto" caps textColor="primary">
-            Integrating with CI
+            Integrating with CI/CD
           </Heading>
           </Appear>
         </Slide>
@@ -167,7 +148,7 @@ export default class Presentation extends React.Component {
             <ListItem>Infrastructure agnostic</ListItem>
           </List>
         </Slide>
-        <Slide bgColor="secondary" id='test'>
+        <Slide bgColor="secondary">
           <Heading size={4} caps textColor="primary">
             K8s at a glance
           </Heading>
@@ -225,81 +206,39 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide bgColor="secondary" textColor="primary">
           <BlockQuote>
-            <Quote>I want to use Kubernetes</Quote>
+            <Quote>Hey, I want to use Kubernetes</Quote>
             <Cite>A customer</Cite>
           </BlockQuote>
         </Slide>
         <Slide bgColor="secondary" textColor="primary">
           <BlockQuote>
-            <Quote>Cloud or Baremetal ?</Quote>
+            <Quote>Do you want to run on Cloud infrastructure ?</Quote>
             <Cite>Me</Cite>
           </BlockQuote>
-          <Layout>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>Yes</GoToAction>
-              </Heading>
-            </Fill>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>No</GoToAction>
-              </Heading>
-            </Fill>
-          </Layout>
         </Slide>
         <Slide bgColor="secondary" textColor="primary">
           <BlockQuote>
             <Quote>Can you run on public cloud ?</Quote>
             <Cite>Me</Cite>
           </BlockQuote>
-          <Layout>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>Yes</GoToAction>
-              </Heading>
-            </Fill>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>No</GoToAction>
-              </Heading>
-            </Fill>
-          </Layout>
         </Slide>
         <Slide bgColor="secondary" textColor="primary">
           <BlockQuote>
-            <Quote>Do you want to multi cloud ?</Quote>
+            <Quote>Do you need to customize Kubernetes ?</Quote>
             <Cite>Me</Cite>
           </BlockQuote>
-          <Layout>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>Yes</GoToAction>
-              </Heading>
-            </Fill>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>No</GoToAction>
-              </Heading>
-            </Fill>
-          </Layout>
+        </Slide>
+        <Slide bgColor="secondary" textColor="primary">
+          <BlockQuote>
+            <Quote>Do you want to run on multiple cloud ?</Quote>
+            <Cite>Me</Cite>
+          </BlockQuote>
         </Slide>
         <Slide bgColor="secondary" textColor="primary">
           <BlockQuote>
             <Quote>Do you want a single deployment tool ?</Quote>
             <Cite>Me</Cite>
           </BlockQuote>
-          <Layout>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>Yes</GoToAction>
-              </Heading>
-            </Fill>
-            <Fill>
-              <Heading caps size={6} margin={30} textColor="secondary" bgColor="primary" >
-                <GoToAction caps size={6} textColor="secondary" bgColor="primary" slide={3}>No</GoToAction>
-              </Heading>
-            </Fill>
-          </Layout>
         </Slide>
         <Slide bgColor="secondary">
           <Heading size={4} margin="30px auto auto" caps textColor="tertiary">
@@ -310,6 +249,7 @@ export default class Presentation extends React.Component {
           <Heading size={4} caps textColor="primary">
             <Link textColor="primary" href="https://aws.amazon.com/fr/eks/">AWS EKS</Link>
           </Heading>
+          <Image src={images.eks_v.replace("/", "")} height="200" padding={10} />
           <List textColor="tertiary">
             <ListItem margin={20} textSize="1.3em">Managed Control Plane by AWS</ListItem>
             <ListItem margin={20} textSize="1.3em">Quite new</ListItem>
@@ -342,6 +282,7 @@ export default class Presentation extends React.Component {
           <Heading size={4} caps textColor="primary">
             <Link textColor="primary" href="https://cloud.google.com/kubernetes-engine/">GKE</Link>
           </Heading>
+          <Image src={images.gke_v.replace("/", "")} height="200" />
           <List textColor="tertiary">
             <ListItem margin={20} textSize="1.3em">Managed Control Plane by GCP</ListItem>
             <ListItem margin={20} textSize="1.3em">First managed Kubernetes</ListItem>
@@ -372,6 +313,7 @@ export default class Presentation extends React.Component {
           <Heading size={4} caps textColor="primary">
             <Link textColor="primary" href="https://docs.microsoft.com/en-us/azure/aks/">Azure AKS</Link>
           </Heading>
+          <Image src={images.aks_v.replace("/", "")} height="200" padding={10}/>
           <List textColor="tertiary">
             <ListItem margin={20} textSize="1.3em">Managed Control Plane by Azure</ListItem>
             <ListItem margin={20} textSize="1.3em">Quite new</ListItem>
@@ -382,6 +324,7 @@ export default class Presentation extends React.Component {
           <Heading size={4} caps textColor="primary">
             <Link textColor="primary" href="https://docs.openstack.org/magnum/latest/user/index.html">OpenStack Magnum</Link>
           </Heading>
+          <Image src={images.magnum_v.replace("/", "")} height="200" padding={10}/>
           <List textColor="tertiary">
             <ListItem margin={20} textSize="1.1em">Managed Control Plane on OpenStack Cloud</ListItem>
             <ListItem margin={20} textSize="1.1em">Based on Heat Stacks</ListItem>
@@ -536,12 +479,12 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide bgColor="secondary">
           <Heading size={4} margin="30px auto auto" caps textColor="primary">
-            Building application
+            Building applications
           </Heading>
         </Slide>
         <Slide transition={[]} bgColor="secondary">
           <Heading size={4} caps textColor="primary">
-            Build application
+            Building applications
           </Heading>
           <Heading size={5} caps textColor="tertiary">
             Images
@@ -554,7 +497,7 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={[]} bgColor="secondary">
           <Heading size={4} caps textColor="primary">
-            Build application
+            Building applications
           </Heading>
           <Heading size={5} caps textColor="tertiary">
             Kubernetes Manifests
@@ -568,7 +511,7 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={[]} bgColor="secondary">
           <Heading size={4} caps textColor="primary">
-            Build application
+            Building applications
           </Heading>
           <Heading size={5} caps textColor="tertiary">
             Helm
@@ -611,261 +554,117 @@ export default class Presentation extends React.Component {
               { loc: [31, 42], },
               { loc: [43, 48], },
             ]}/>
-
-
-
-
-
-
-
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Vertical scaling
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Integrating with CI/CD
+          </Heading>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Integrating with CI/CD
           </Heading>
           <Heading size={5} caps textColor="tertiary">
-            AWS driven
+            Classic "push" mode
           </Heading>
           <List textColor="tertiary">
-            <ListItem textSize="1.2em">Leverages CloudWatch metric</ListItem>
-            <ListItem textSize="1.2em">Scales up/down ASG on AWS</ListItem>
-            <ListItem textSize="1.2em">CloudWatch is not K8s aware</ListItem>
-            <ListItem textSize="1.2em">Requires fine tuning</ListItem>
+            <ListItem margin={20} textSize="1.2em">CI/CD builds images</ListItem>
+            <ListItem margin={20} textSize="1.2em">CI/CD tags and push to registry</ListItem>
+            <ListItem margin={20} textSize="1.2em">CI/CD manages release cycle </ListItem>
+            <ListItem margin={20} textSize="1.2em">CI/CD talks directly to Kubernetes API</ListItem>
           </List>
-          <Image src={images.cloudwatch.replace("/", "")} margin="auto auto auto" height="200px"/>
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Vertical scaling
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Integrating with CI/CD
+          </Heading>
+          <Heading size={5} margin={20} caps textColor="tertiary">
+            <Link textColor="tertiary" href="https://github.com/clusterfrak-dynamics/symplegma">"Pull" mode with Keel.sh</Link>
+          </Heading>
+          <Image src={images.keel_v.replace("/", "")} height="200" />
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.1em">CI/CD builds images</ListItem>
+            <ListItem margin={20} textSize="1.1em">CI/CD tags and push to registry</ListItem>
+            <ListItem margin={20} textSize="1.1em">Keel in cluster watches for new images</ListItem>
+            <ListItem margin={20} textSize="1.1em">Keel deploys app per according to policy</ListItem>
+          </List>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Integrating with CI/CD
+          </Heading>
+          <Heading size={5} margin={20} caps textColor="tertiary">
+            <Link textColor="tertiary" href="https://github.com/clusterfrak-dynamics/symplegma">"Pull" mode with Keel.sh</Link>
+          </Heading>
+          <Image src={images.ci_keel.replace("/", "")} width="500" />
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Extra: Monitoring
+          </Heading>
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Extra: Monitoring
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.1em">Cloud Provider integrated </ListItem>
+            <ListItem margin={20} textSize="1.1em">Plethora of SaaS tools</ListItem>
+            <ListItem margin={20} textSize="1.1em">Datadog / Sysdig / New Relic</ListItem>
+            <ListItem margin={20} textSize="1.1em">OSS stack with Prometheus and Grafana</ListItem>
+          </List>
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Extra: Monitoring
           </Heading>
           <Heading size={5} caps textColor="tertiary">
-            K8s driven
+            <Link textColor="tertiary" href="kube-prometheus">kube-prometheus</Link>
           </Heading>
           <List textColor="tertiary">
-            <ListItem textSize="1em">Talks directly to Kubernetes</ListItem>
-            <ListItem textSize="1em">Scales up/down ASG via AWS API</ListItem>
-            <ListItem textSize="1em">K8s aware: running on K8s itself</ListItem>
-            <ListItem textSize="1em">Scales when PODs cannot be scheduled</ListItem>
+            <ListItem margin={20} textSize="1.1em">Set of official Helm charts</ListItem>
+            <ListItem margin={20} textSize="1.1em">Prometheus Operator</ListItem>
+            <ListItem margin={20} textSize="1.1em">Prometheus / Alertmanager</ListItem>
+            <ListItem margin={20} textSize="1.1em">Grafana</ListItem>
           </List>
-          <CodePane
-            lang="yaml"
-            source={require("raw-loader!../assets/autoscaler.example")}
-            margin="10px auto"
-          />
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Vertical scaling
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Extra: Monitoring
           </Heading>
           <Heading size={5} caps textColor="tertiary">
-            K8s driven
+            <Link textColor="tertiary" href="kube-prometheus">kube-prometheus</Link>
           </Heading>
-          <Image src={images.cloudwatch_k8s1.replace("/", "")} margin="15px auto auto" height="270px"/>
-          <Image src={images.cloudwatch_k8s2.replace("/", "")} margin="auto 15px auto" height="270px"/>
+          <Image src={images.prometheus_cp.replace("/", "")} width="1000" />
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Horizontal scaling
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Extra: Monitoring
           </Heading>
           <Heading size={5} caps textColor="tertiary">
-            Horizontal Pod Autoscaler
+            <Link textColor="tertiary" href="kube-prometheus">kube-prometheus</Link>
           </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">Kubernetes API object</ListItem>
-            <ListItem textSize="1.1em">Watches PODs based on resources</ListItem>
-            <ListItem textSize="1.1em">Linked to a deployment object</ListItem>
-            <ListItem textSize="1.1em">Scales up/down deployment replicas</ListItem>
-          </List>
-          <CodePane
-            lang="yaml"
-            source={require("raw-loader!../assets/horizontalpodautoscaler.example")}
-            margin="10px auto"
-          />
+          <Image src={images.prometheus_slack.replace("/", "")} height="400" />
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps fit textColor="secondary">
-            Publishing an application
-          </Heading>
-          <Heading size={5} caps textColor="tertiary">
-            How it all fits
-          </Heading>
-          <Text textColor="tertiary" margin="30px auto auto" caps>Ingress (L7 LB)</Text>
-          <Text textColor="secondary" margin="30px auto auto" textSize="1.5em">▼</Text>
-          <Text textColor="tertiary" margin="30px auto auto" caps>Service (L4 LB, asbtract PODs)</Text>
-          <Text textColor="secondary" margin="30px auto auto" textSize="1.5em">▼</Text>
-          <Text textColor="tertiary" margin="30px auto auto" caps>Deployment (a bunch of PODs)</Text>
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps fit textColor="secondary">
-            Publishing an application
-          </Heading>
-          <Heading size={4} caps textColor="tertiary">
-            Ingress Controller
-          </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">Acts as an L7 load balancer</ListItem>
-            <ListItem textSize="1.1em">Watches Kubernetes API for ingress rules</ListItem>
-            <ListItem textSize="1.1em">Handles TLS termination</ListItem>
-            <ListItem textSize="1.1em">Handles routing rules</ListItem>
-          </List>
-          <CodePane
-            lang="yaml"
-            source={require("raw-loader!../assets/ingressrule.example")}
-            margin="10px auto"
-          />
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps fit textColor="secondary">
-            Publishing an application
-          </Heading>
-          <Heading size={4} caps textColor="tertiary">
-            Service
-          </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">Acts as an L4 load balancer</ListItem>
-            <ListItem textSize="1.1em">Abstract PODs</ListItem>
-            <ListItem textSize="1.1em">PODs are not reached directly</ListItem>
-            <ListItem textSize="1.1em">Service discovery</ListItem>
-          </List>
-          <CodePane
-            lang="yaml"
-            source={require("raw-loader!../assets/service.example")}
-            margin="10px auto"
-          />
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Træfik
-          </Heading>
-          <Image src={images.morbier.replace("/", "")} padding="5" height="200px"/>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">Cloud reverse proxy</ListItem>
-            <ListItem textSize="1.1em">Ingress controller</ListItem>
-            <ListItem textSize="1.1em">Watches Kubernetes API for ingress rules</ListItem>
-            <ListItem textSize="1.1em">Let's encrypt</ListItem>
-            <ListItem textSize="1.1em">HA with K / V</ListItem>
-          </List>
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Træfik
-          </Heading>
-          <Heading size={4} caps textColor="tertiary">
-            Let's Encrypt
-          </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">On demand TLS certs</ListItem>
-            <ListItem textSize="1.1em">Auto renewal</ListItem>
-            <ListItem textSize="1.1em">Hard to HA</ListItem>
-            <ListItem textSize="1.1em">Challenge storage</ListItem>
-            <ListItem textSize="1.1em">Cert storage</ListItem>
-          </List>
-          <Text caps fit textColor="secondary">Træfik uses a K / V store ❤</Text>
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Træfik
-          </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">Acts as in entrypoint for the cluster</ListItem>
-            <ListItem textSize="1.1em">Can be autoscaled like any other deployment</ListItem>
-            <ListItem textSize="1.1em">Configuration backed in Consul or Etcd</ListItem>
-            <ListItem textSize="1.1em">Free and automated TLS cert</ListItem>
-          </List>
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Integrating with CI
-          </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.3em">
-              Cluster is composed of:
-                <List textColor="tertiary">
-                  <ListItem textSize="2rem" margin="15px 30px auto">Kubernetes system services</ListItem>
-                  <ListItem textSize="2rem" margin="15px 30px auto">Træfik as an ingress controller</ListItem>
-                  <ListItem textSize="2rem" margin="15px 30px auto">Preprod / Prod namespaces</ListItem>
-                </List>
-            </ListItem>
-            <ListItem margin="15px auto auto" textSize="1.1em">
-              CI system acts as a templating tools:
-                <List textColor="tertiary">
-                  <ListItem textSize="2rem" margin="15px 30px auto">For Service</ListItem>
-                  <ListItem textSize="2rem" margin="15px 30px auto">For Ingress</ListItem>
-                  <ListItem textSize="2rem" margin="15px 30px auto">For Deployment</ListItem>
-                </List>
-            </ListItem>
-          </List>
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Integrating with CI
-          </Heading>
-          <Heading size={4} caps textColor="tertiary">
-            Git push workflow
-          </Heading>
-          <List textColor="tertiary">
-            <ListItem textSize="1.1em">Runs tests</ListItem>
-            <ListItem textSize="1.1em">Builds docker images for the app</ListItem>
-            <ListItem textSize="1.1em">Tests the images</ListItem>
-            <ListItem textSize="1.1em">Pushes images into registry: ECR</ListItem>
-            <ListItem textSize="1.1em">Ensures cluster is idempotent</ListItem>
-            <ListItem textSize="1.1em">Rolling update the app</ListItem>
-            <ListItem textSize="1.1em">All of this is done per branch</ListItem>
-          </List>
-        </Slide>
-        <CodeSlide
-            transition={[]}
-            bgColor="#2D2D2D"
-            color="#CCCCCC"
-            lang="bash"
-            code={require("raw-loader!../assets/render.example")}
-            ranges={[
-              { loc: [0, 1], title: "CI templating" },
-              { loc: [2, 11], note: "Per branch workflow" },
-              { loc: [12, 17], note: "Templating" },
-              { loc: [17, 33], note: "Service" },
-              { loc: [33, 55], note: "Deployment" },
-              { loc: [55, 69] , note: "POD autoscaler" },
-              { loc: [69, 85], note: "Ingress rule" },
-            ]}/>
-        <CodeSlide
-            transition={[]}
-            lang="yaml"
-            code={require("raw-loader!../assets/travis.example")}
-            ranges={[
-              { loc: [0, 1], title: "Travis config" },
-              { loc: [2, 4], note: "Enables Docker" },
-              { loc: [5, 9], note: "Only build preprod and prod" },
-              { loc: [10, 22], note: "ENV var to customize template" },
-              { loc: [23, 26], note: "Builds Docker image" },
-              { loc: [26, 29], note: "Installs AWS CLI" },
-              { loc: [29, 31] , note: "Tags docker image with commit for AWS ECR" },
-              { loc: [31, 33] , note: "Creates ECR repo and push image" },
-              { loc: [33, 35], note: "Download Kubectl to access K8s API" },
-              { loc: [35, 37], note: "Renders templates and apply them to cluster" }
-            ]}/>
-        <Slide transition={["fade"]} bgColor="primary" textColor="secondary">
-          <Heading textColor="secondary" size={3} caps fit>
+        <Slide transition={[]} bgColor="secondary" textColor="primary">
+          <Heading textColor="primary" size={3} caps fit>
             Demo & Conclusion
           </Heading>
         </Slide>
-        <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
-          <Heading textColor="primary" size={3} caps>
+        <Slide transition={[]} bgColor="primary" textColor="secondary">
+          <Heading textColor="secondary" size={3} caps>
             Thank you!
           </Heading>
           <Text margin="10px auto auto">
-            <Link textColor="primary" href="https://github.com/ArchiFleKs">@ArchiFleKs</Link>
+            <Link textColor="secondary" textSize="0.9em" href="https://ramitsurana.github.io/awesome-kubernetes/">ramitsurana.github.io/awesome-kubernetes/</Link>
           </Text>
           <Text margin="10px auto auto">
-            <Link textColor="primary" href="https://archifleks.github.io/saastalk-03-2017">archifleks.github.io/saastalk-03-2017</Link>
+            <Link textColor="secondary" textSize="0.9em" href="https://archifleks.github.io/poss-06-12-2018">archifleks.github.io/poss-06-12-2018</Link>
           </Text>
           <Text margin="10px auto auto">
-            <Link textColor="primary" href="https://osones.com">osones.com</Link>
-          </Text>
-          <Text margin="10px auto auto">
-            <Link textColor="primary" margin="10px auto auto" href="https://twitter.com/osones">@osones</Link>
+            <Link textColor="secondary" textSize="0.9em" href="https://github.io/archifleks/kube-showcase">github.com/archifleks/kube-showcase</Link>
           </Text>
           <Image src={images.come.replace("/", "")} height="250" padding="10"/>
-          <Heading textColor="primary" size={4} caps>
+          <Heading textColor="secondary" size={4} caps>
             We're hiring!
           </Heading>
         </Slide>
