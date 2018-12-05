@@ -1,0 +1,223 @@
+clusterName: awcc-kube-aws-k8s-cluster
+s3URI: s3://kube-aws-klefevre
+amiId: "ami-0772233ad155871ff"
+disableContainerLinuxAutomaticUpdates: true
+keyName: ocelot
+region: eu-west-1
+kmsKeyArn: "arn:aws:kms:eu-west-1:161285725140:key/130f8fa4-4380-4d68-bceb-29087998e75a"
+
+apiEndpoints:
+- name: default
+  dnsName: kube-aws-showcase.archifleks.net
+  loadBalancer:
+    subnets:
+    - name: ExistingPublicSubnet1
+    - name: ExistingPublicSubnet2
+    - name: ExistingPublicSubnet3
+    type: network
+    hostedZone:
+      id: Z1QX2F9WHERETA
+
+controller:
+  count: 1
+  instanceType: t3.medium
+  instanceTags:
+    instanceRole: controller
+  rootVolume:
+    size: 30
+    type: gp2
+  subnets:
+    - name: ExistingPrivateSubnet1
+    - name: ExistingPrivateSubnet2
+    - name: ExistingPrivateSubnet3
+
+worker:
+  nodePools:
+    - name: default
+      subnets:
+      - name: ExistingPrivateSubnet1
+      - name: ExistingPrivateSubnet2
+      - name: ExistingPrivateSubnet3
+      instanceType: t3.medium
+      instanceTags:
+        instanceRole: worker
+      rootVolume:
+        size: 30
+        type: gp2
+      autoScalingGroup:
+        minSize: 1
+        maxSize: 3
+      autoscaling:
+        clusterAutoscaler:
+          enabled: true
+
+etcd:
+  count: 1
+  instanceType: t3.medium
+  instanceTags:
+    instanceRole: etcd
+  rootVolume:
+    size: 30
+    type: gp2
+  subnets:
+    - name: ExistingPrivateSubnet1
+    - name: ExistingPrivateSubnet2
+    - name: ExistingPrivateSubnet3
+  version: 3.2.18
+
+vpc:
+  idFromStackOutput: awcc-kube-aws-showcase-VPCid
+
+subnets:
+  - name: ExistingPublicSubnet1
+    availabilityZone: eu-west-1a
+    idFromStackOutput: awcc-kube-aws-showcase-PublicSubnet1
+  - name: ExistingPublicSubnet2
+    availabilityZone: eu-west-1b
+    idFromStackOutput: awcc-kube-aws-showcase-PublicSubnet2
+  - name: ExistingPublicSubnet3
+    availabilityZone: eu-west-1c
+    idFromStackOutput: awcc-kube-aws-showcase-PublicSubnet3
+  - name: ExistingPrivateSubnet1
+    availabilityZone: eu-west-1a
+    idFromStackOutput: awcc-kube-aws-showcase-PrivateSubnet1
+  - name: ExistingPrivateSubnet2
+    availabilityZone: eu-west-1b
+    idFromStackOutput: awcc-kube-aws-showcase-PrivateSubnet2
+  - name: ExistingPrivateSubnet3
+    availabilityZone: eu-west-1c
+    idFromStackOutput: awcc-kube-aws-showcase-PrivateSubnet3
+
+tlsCADurationDays: 36500
+tlsCertDurationDays: 3650
+
+kubernetesVersion: v1.11.5
+
+kubernetes:
+  encryptionAtRest:
+    enabled: false
+  networking:
+    selfHosting:
+      type: canal      # either "canal" or "flannel"
+      typha: false     # enable for type 'canal' for 50+ node clusters
+
+kubeSystemNamespaceLabels:
+  name: kube-system
+
+kubernetesDashboard:
+  adminPrivileges: true
+  insecureLogin: false
+  enabled: true
+
+kubeDns:
+  provider: coredns
+  autoscaler:
+    coresPerReplica: 256
+    nodesPerReplica: 16
+    min: 2
+
+kubeProxy:
+  ipvsMode:
+    enabled: false
+    scheduler: rr
+    syncPeriod: 300s
+    minSyncPeriod: 60s
+
+addons:
+  clusterAutoscaler:
+    enabled: true
+  rescheduler:
+    enabled: false
+  metricsServer:
+    enabled: true
+  prometheus:
+    securityGroupsEnabled: true
+
+experimental:
+  admission:
+    podSecurityPolicy:
+      enabled: false
+    alwaysPullImages:
+      enabled: false
+    denyEscalatingExec:
+      enabled: false
+    initializers:
+      enabled: false
+    priority:
+      enabled: false
+    mutatingAdmissionWebhook:
+      enabled: false
+    validatingAdmissionWebhook:
+      enabled: false
+    OwnerReferencesPermissionEnforcement:
+      enabled: false
+    persistentVolumeClaimResize:
+      enabled: true
+
+  awsEnvironment:
+    enabled: false
+    environment:
+      CFNSTACK: '{ "Ref" : "AWS::StackId" }'
+
+  auditLog:
+    enabled: false
+    logPath: /var/log/kube-apiserver-audit.log
+    maxAge: 30
+    maxBackup: 1
+    maxSize: 100
+
+  authentication:
+    webhook:
+      enabled: false
+      cacheTTL: 1m0s
+      configBase64: base64-encoded-webhook-yaml
+
+  awsNodeLabels:
+    enabled: false
+
+  clusterAutoscalerSupport:
+    enabled: true
+
+  tlsBootstrap:
+    enabled: true
+
+  nodeAuthorizer:
+    enabled: true
+
+  ephemeralImageStorage:
+    enabled: false
+
+  kiamSupport:
+    enabled: true
+    image:
+      repo: quay.io/uswitch/kiam
+      tag: v2.7
+      rktPullDocker: false
+    sessionDuration: 15m
+    serverAddresses:
+      serverAddress: localhost:443
+      agentAddress: kiam-server:443
+
+  kube2IamSupport:
+    enabled: false
+
+  nodeDrainer:
+    enabled: false
+    drainTimeout: 5
+    iamRole:
+      arn: ""
+
+  oidc:
+    enabled: false
+    issuerUrl: "https://accounts.google.com"
+    clientId: "kubernetes"
+    usernameClaim: "email"
+    groupsClaim: "groups"
+
+  disableSecurityGroupIngress: false
+
+kubelet:
+  RotateCerts:
+    enabled: true
+
+hostOS:

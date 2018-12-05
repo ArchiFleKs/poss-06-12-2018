@@ -45,6 +45,7 @@ import preloader from "spectacle/lib/utils/preloader";
 require("normalize.css");
 require('prismjs/components/prism-bash');
 require('prismjs/components/prism-yaml');
+require('prismjs/components/prism-ini');
 require('prismjs/themes/prism-tomorrow.css');
 
 const images = {
@@ -71,7 +72,8 @@ const images = {
   traefik_v: require("../assets/traefik_v.png"),
   dcos: require("../assets/dcos.png"),
   come: require("../assets/come.gif"),
-  morbier: require("../assets/morbier.png")
+  morbier: require("../assets/morbier.png"),
+  infra_ref: require("../assets/infra_ref.png")
 };
 
 preloader(images);
@@ -194,6 +196,33 @@ export default class Presentation extends React.Component {
           <Text textColor="tertiary" margin="30px auto auto">Cluster Deployment</Text>
           <Text textColor="tertiary" margin="30px auto auto">Cluster Lifecycle</Text>
         </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Where and how
+          </Heading>
+          <Heading size={5} caps fit margin="30px auto auto" textColor="tertiary">
+            IaC: Infrastructure as Code
+          </Heading>
+          <Text textColor="primary" margin="30px auto auto" textSize="1.5em">▼</Text>
+          <Text textColor="tertiary" margin={25} fit caps>Terraform - CloudFormation - Cloud Deployment Manager - OpenStack Heat - Azure Resource Manager </Text>
+          <Text textColor="primary" margin="30px auto auto" textSize="1.5em">▼</Text>
+          <Text textColor="tertiary" margin="30px auto auto">Declarative infrastructure</Text>
+          <Text textColor="tertiary" margin="30px auto auto">Immutable infrastructure</Text>
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Where and how
+          </Heading>
+          <Heading size={5} caps fit margin="30px auto auto" textColor="tertiary">
+            Reference implementation
+          </Heading>
+          <Image src={images.infra_ref.replace("/", "")} height="500" />
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Running Kubernetes
+          </Heading>
+        </Slide>
         <Slide bgColor="secondary" textColor="primary">
           <BlockQuote>
             <Quote>I want to use Kubernetes</Quote>
@@ -272,6 +301,99 @@ export default class Presentation extends React.Component {
             </Fill>
           </Layout>
         </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="tertiary">
+            Managed Kubernetes
+          </Heading>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://aws.amazon.com/fr/eks/">AWS EKS</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.3em">Managed Control Plane by AWS</ListItem>
+            <ListItem margin={20} textSize="1.3em">Quite new</ListItem>
+            <ListItem margin={20} textSize="1.3em">Amazon Linux / Ubuntu</ListItem>
+            <ListItem margin={20} textSize="1.3em">CloudFormation / Terraform / <Link textColor="primary" href="https://eksctl.io/">eksctl</Link></ListItem>
+            <ListItem margin={20} textSize="1.3em">Kubernetes v1.10.X</ListItem>
+          </List>
+        </Slide>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="bash"
+            code={require("raw-loader!../assets/aws-eks-terraform.tfvars")}
+            ranges={[
+              { loc: [0, 0], title: "EKS" },
+              { loc: [5, 7], note: "EKS Terraform module" },
+              { loc: [21, 25], note: "AWS Region" },
+              { loc: [26, 31], note: "DNS Config" },
+              { loc: [32, 36], note: "Kubernetes cluster" },
+              { loc: [37, 50], note: "Worker pools" },
+            ]}/>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://aws.amazon.com/fr/eks/">AWS EKS</Link>
+          </Heading>
+        <iframe height='600' width='1000' id="asciicast-214954" src="https://asciinema.org/a/214954/iframe" async></iframe>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://cloud.google.com/kubernetes-engine/">GKE</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.3em">Managed Control Plane by GCP</ListItem>
+            <ListItem margin={20} textSize="1.3em">First managed Kubernetes</ListItem>
+            <ListItem margin={20} textSize="1.3em">COS / Ubuntu</ListItem>
+            <ListItem margin={20} textSize="1.3em">Terraform / Google Cloud SDK</ListItem>
+            <ListItem margin={20} textSize="1.3em">Kubernetes v1.11.X</ListItem>
+          </List>
+        </Slide>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="bash"
+            code={require("raw-loader!../assets/gcp-gke-terraform.tfvars")}
+            ranges={[
+              { loc: [0, 0], title: "EKS" },
+              { loc: [5, 8], note: "GKE configuration" },
+              { loc: [10, 19], note: "GKE configuration" },
+              { loc: [20, 29], note: "GKE configuration" },
+            ]}/>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://cloud.google.com/kubernetes-engine/">GKE</Link>
+          </Heading>
+        <iframe height='600' width='1000' id="asciicast-215084" src="https://asciinema.org/a/215084/iframe" async></iframe>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://docs.microsoft.com/en-us/azure/aks/">Azure AKS</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.3em">Managed Control Plane by Azure</ListItem>
+            <ListItem margin={20} textSize="1.3em">Quite new</ListItem>
+            <ListItem margin={20} textSize="1.3em">Kubernetes v1.11.X</ListItem>
+          </List>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://docs.openstack.org/magnum/latest/user/index.html">OpenStack Magnum</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.1em">Managed Control Plane on OpenStack Cloud</ListItem>
+            <ListItem margin={20} textSize="1.1em">Based on Heat Stacks</ListItem>
+            <ListItem margin={20} textSize="1.1em">Kubernetes v1.11.X</ListItem>
+            <ListItem margin={20} textSize="1.1em">Available on some public Clouds</ListItem>
+          </List>
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="tertiary">
+            Cloud specific deployment tools
+          </Heading>
+        </Slide>
         <Slide transition={[]} bgColor="secondary">
           <Heading size={4} caps textColor="primary">
             <Link textColor="primary" href="https://github.com/kubernetes-incubator/kube-aws">kube-aws</Link>
@@ -284,39 +406,218 @@ export default class Presentation extends React.Component {
             <ListItem margin={20} textSize="1.3em">Kubernetes v1.11.X</ListItem>
           </List>
         </Slide>
-        <Slide transition={[]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            kube-aws
-          </Heading>
-          <CodePane
-            theme="external"
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
             lang="yaml"
-            source={require("raw-loader!../assets/cluster.example")}
-            margin="10px auto"
-          />
-        </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            kube-aws
+            code={require("raw-loader!../assets/kube-aws-v0.12.0-cluster.yaml")}
+            ranges={[
+              { loc: [0, 1], title: "cluster.yaml" },
+              { loc: [1, 7], note: "Basic configuration" },
+              { loc: [8, 19], note: "Load Balancer configuration" },
+              { loc: [20, 32], note: "Control Plane infrastructure" },
+              { loc: [33, 52], note: "Worker Pools" },
+              { loc: [53, 66], note: "Etcd configuration" },
+              { loc: [67, 89] , note: "AWS Network configuration" },
+              { loc: [93, 102], note: "Kubernetes Networking" },
+              { loc: [111, 117], note: "Addons: kube-dns" },
+              { loc: [118, 223], note: "Advanced configuration" },
+            ]}/>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://github.com/kubernetes-incubator/kube-aws">kube-aws</Link>
           </Heading>
-          <CodePane
-            lang="bash"
-            source={require("raw-loader!../assets/kube-aws2.example")}
-            margin="10px auto"
-          />
+        <iframe height='600' width='1000' id="asciicast-214945" src="https://asciinema.org/a/214945/iframe" async></iframe>
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary">
-          <Heading size={4} caps textColor="secondary">
-            Scaling K8s
-          </Heading>
-          <Heading size={5} caps textColor="tertiary">
-            Different level of scaling
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://github.com/kubernetes/kops">KOPS</Link>
           </Heading>
           <List textColor="tertiary">
-            <ListItem>Vertical scaling: Worker nodes</ListItem>
-            <ListItem>Horizontal scaling: PODs / Containers </ListItem>
+            <ListItem margin={20} textSize="1.3em">Deploys on AWS and GCP</ListItem>
+            <ListItem margin={20} textSize="1.3em">Heavy development</ListItem>
+            <ListItem margin={20} textSize="1.3em">Easily tunable</ListItem>
+            <ListItem margin={20} textSize="1.3em">Multiple OS</ListItem>
+            <ListItem margin={20} textSize="1.3em">Kubernetes v1.10.X</ListItem>
           </List>
         </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="tertiary">
+            Infrastructure agnostic deployment tools
+          </Heading>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/">Kubeadm</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.1em">Official community installer</ListItem>
+            <ListItem margin={20} textSize="1.1em">Stable since v1.13.0 released this week</ListItem>
+            <ListItem margin={20} textSize="1.1em">Does not take care of bootstrapping machines</ListItem>
+            <ListItem margin={20} textSize="1.1em">Best practice configuration and tunable</ListItem>
+            <ListItem margin={20} textSize="1.1em">Multiple OS</ListItem>
+            <ListItem margin={20} textSize="1.1em">Kubernetes v1.13.0</ListItem>
+            <ListItem margin={20} textSize="1.1em">Can be automated and used by other tools </ListItem>
+          </List>
+        </Slide>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="yaml"
+            code={require("raw-loader!../assets/kubeadm-config.yaml")}
+            ranges={[
+              { loc: [0, 0], title: "kubeadm-config" },
+              { loc: [0, 12],  },
+              { loc: [12, 16], },
+              { loc: [16, 24], },
+            ]}/>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://github.com/kubernetes-incubator/kubespray">Kubespray</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.1em">Based on Ansible</ListItem>
+            <ListItem margin={20} textSize="1.1em">Quite dense</ListItem>
+            <ListItem margin={20} textSize="1.1em">A bit hard to understand</ListItem>
+            <ListItem margin={20} textSize="1.1em">Multiple OS</ListItem>
+            <ListItem margin={20} textSize="1.1em">Does not officially take care of infrastructure</ListItem>
+            <ListItem margin={20} textSize="1.1em">Kubeadm support</ListItem>
+            <ListItem margin={20} textSize="1.1em">Kubernetes v1.12.X</ListItem>
+          </List>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://github.com/clusterfrak-dynamics/symplegma">Symplegma</Link>
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.1em">Based on Ansible</ListItem>
+            <ListItem margin={20} textSize="1.1em">Inspired by Kubespray but streamlined</ListItem>
+            <ListItem margin={20} textSize="1.1em">A bit hard to understand</ListItem>
+            <ListItem margin={20} textSize="1.1em">CoreOS but basically agnostic (from source)</ListItem>
+            <ListItem margin={20} textSize="1.1em">Does not officially take care of infrastructure</ListItem>
+            <ListItem margin={20} textSize="1.1em">Full Kubeadm</ListItem>
+            <ListItem margin={20} textSize="1.1em">Kubernetes v1.12.X</ListItem>
+          </List>
+        </Slide>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="bash"
+            code={require("raw-loader!../assets/symplegma-terraform.tfvars")}
+            ranges={[
+              { loc: [0, 0], title: "symplegma-infra" },
+              { loc: [23, 33], note: "AWS infrastructure" },
+              { loc: [34, 46], note: "Bastion instances" },
+              { loc: [47, 64], note: "Master instances"},
+              { loc: [65, 82], note: "Node instances"},
+              { loc: [83, 91], note: "Load balancer configuration"},
+            ]}/>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="yaml"
+            code={require("raw-loader!../assets/symplegma-ansible.yml")}
+            ranges={[
+              { loc: [0, 0], title: "symplegma-ansible" },
+              { loc: [1, 5], note: "Ansible config" },
+              { loc: [6, 8], note: "Kubernetes version" },
+              { loc: [11, 16], note: "Networking Config"},
+              { loc: [19, 31], note: "Kubeadm custom configuration"},
+            ]}/>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            <Link textColor="primary" href="https://github.com/clusterfrak-dynamics/symplegma">symplegma</Link>
+          </Heading>
+        <iframe height='600' width='1000' id="asciicast-215036" src="https://asciinema.org/a/215036/iframe" async></iframe>
+        </Slide>
+        <Slide bgColor="secondary">
+          <Heading size={4} margin="30px auto auto" caps textColor="primary">
+            Building application
+          </Heading>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Build application
+          </Heading>
+          <Heading size={5} caps textColor="tertiary">
+            Images
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.2em">Use semantic versioning</ListItem>
+            <ListItem margin={20} textSize="1.2em">Use registries (Hub, ECR, ACR, GCR, Quay) </ListItem>
+            <ListItem margin={20} textSize="1.2em">Tag your images (with semver)</ListItem>
+          </List>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Build application
+          </Heading>
+          <Heading size={5} caps textColor="tertiary">
+            Kubernetes Manifests
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.2em">Multiple environments</ListItem>
+            <ListItem margin={20} textSize="1.2em">Avoid code duplication</ListItem>
+            <ListItem margin={20} textSize="1.2em">Reusable manifests</ListItem>
+            <ListItem margin={20} textSize="1.2em">Templating with Helm</ListItem>
+          </List>
+        </Slide>
+        <Slide transition={[]} bgColor="secondary">
+          <Heading size={4} caps textColor="primary">
+            Build application
+          </Heading>
+          <Heading size={5} caps textColor="tertiary">
+            Helm
+          </Heading>
+          <List textColor="tertiary">
+            <ListItem margin={20} textSize="1.2em">Templating system</ListItem>
+            <ListItem margin={20} textSize="1.2em">Package manager for Kubernetes </ListItem>
+            <ListItem margin={20} textSize="1.2em">Like Terraform but for Kubernetes</ListItem>
+            <ListItem margin={20} textSize="1.2em">Reusable manifests</ListItem>
+            <ListItem margin={20} textSize="1.2em">
+              <Link textColor="tertiary" href="https://hub.kubeapps.com/">Official community supported Helm charts</Link>
+            </ListItem>
+          </List>
+        </Slide>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="yaml"
+            code={require("raw-loader!../assets/helm-de.yaml")}
+            ranges={[
+              { loc: [0, 0], title: "helm template" },
+              { loc: [0, 9], },
+              { loc: [9, 15], },
+              { loc: [15, 20], },
+              { loc: [20, 40], },
+              { loc: [40, 51], },
+            ]}/>
+        <CodeSlide
+            transition={[]}
+            bgColor="#2D2D2D"
+            color="#CCCCCC"
+            lang="yaml"
+            code={require("raw-loader!../assets/helm-values.yaml")}
+            ranges={[
+              { loc: [0, 0], title: "helm values" },
+              { loc: [4, 10], },
+              { loc: [14, 17], },
+              { loc: [18, 30], },
+              { loc: [31, 42], },
+              { loc: [43, 48], },
+            ]}/>
+
+
+
+
+
+
+
         <Slide transition={["fade"]} bgColor="primary">
           <Heading size={4} caps textColor="secondary">
             Vertical scaling

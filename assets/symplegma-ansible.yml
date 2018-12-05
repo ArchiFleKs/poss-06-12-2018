@@ -1,0 +1,31 @@
+---
+ansible_ssh_user: core
+ansible_python_interpreter: /opt/bin/python
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@{{ ansible_ssh_bastion_host }}"'
+ansible_ssh_bastion_host: __BASTION_IP__
+
+kubeadm_version: v1.12.3
+kubernetes_version: v1.12.3
+# kubernetes_api_server_address: __NLB_HOSTNAME__
+# kubernetes_api_server_port: __NLB_LISTENER_PORT__
+
+cni_plugin: "calico"
+
+calico_mtu: 8981
+calico_ipv4pool_ipip: "CrossSubnet"
+calico_felix_ipip: "true"
+
+kubeadm_cluster_name: awcc-symplegma
+
+kubeadm_api_server_cert_extra_sans: {}
+kubeadm_api_server_extra_args: |
+  cloud-provider: "aws"
+kubeadm_controller_manager_extra_args: |-
+    cloud-provider: "aws"
+    configure-cloud-routes: "false"
+kubeadm_scheduler_extra_args: {}
+kubeadm_api_server_extra_volumes: {}
+kubeadm_controller_manager_extra_volumes: {}
+kubeadm_scheduler_extra_volumes: {}
+kubeadm_kubelet_extra_args: |
+  cloud-provider: "aws"
