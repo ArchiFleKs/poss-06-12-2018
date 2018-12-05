@@ -578,7 +578,7 @@ export default class Presentation extends React.Component {
             Integrating with CI/CD
           </Heading>
           <Heading size={5} margin={20} caps textColor="tertiary">
-            <Link textColor="tertiary" href="https://github.com/clusterfrak-dynamics/symplegma">"Pull" mode with Keel.sh</Link>
+            <Link textColor="tertiary" href="https://keel.sh/">"Pull" mode with Keel.sh</Link>
           </Heading>
           <Image src={images.keel_v.replace("/", "")} height="200" />
           <List textColor="tertiary">
